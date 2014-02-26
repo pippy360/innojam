@@ -27,24 +27,25 @@
 	</header>
 	<div data-role="content">
 		<div class="ui-field-contain">
+			<label for="stop-input">Bus stop:</label>
+			<input type="search" name="clear" id="stop-input"/>
+			<p class="input-error" id="stop-input-error"></p>
+		</div>
+		<div class="ui-field-contain">
 			<label for="route-input">Route:</label>
 			<input type="search" name="clear" id="route-input" list="route-input-list"/>
 			<datalist id="route-input-list"></datalist>
 			<p class="input-error" id="route-input-error"></p>
 		</div>
 		<div class="ui-field-contain">
-			<label for="stop-input">Bus stop:</label>
-			<input type="search" name="clear" id="stop-input"/>
-			<p class="input-error" id="stop-input-error"></p>
-		</div>
-		<div class="ui-field-contain">
 			<label for="walk-time-input">Walk time:</label>
 			<input type="search" name="clear" id="walk-time-input"/>
 			<p class="input-error" id="walk-time-input-error"></p>
 		</div>
-		<form action="#bus-list">
+		<!--form action="#bus-list">
 			<input type="submit" value="Search"/>
-		</form>
+		</form-->
+		<a href="#bus-list" data-role="button">Submit</a>
 	</div>
 	<footer data-role="footer" style="text-align:center;" data-theme="b">
 		<em>Developed by TCD.</em>
