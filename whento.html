@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<head>
+	<title>When to?!</title>
+
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.css" />
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
+</head>
+<body>
+<div data-role="page" data-theme="a" id="main" >
+	<header data-role="header" data-theme="a">
+		<h1>When to?!</h1>
+	</header>
+	<div data-role="content">
+		<div class="ui-field-contain">
+			<label for="route-input">Route:</label>
+			<input type="search" name="clear" id="route-input"/>
+			<p id="route-input-error"></p>
+		</div>
+		<div class="ui-field-contain">
+			<label for="stop-input">Bus stop:</label>
+			<input type="search" name="clear" id="stop-input"/>
+			<p id="stop-input-error"></p>
+		</div>
+		<div class="ui-field-contain">
+			<label for="walk-time-input">Walk time:</label>
+			<input type="search" name="clear" id="walk-time-input"/>
+			<p id="walk-time-input-error"></p>
+		</div>
+		<input type="submit" value="Search"/>
+	</div>
+	<footer data-role="footer" style="text-align:center;" data-theme="a">
+		<em>Developed by TCD.</em>
+	</footer>
+</div>
+
+<div data-role="page" id="bus-list">
+</div>
+</body>
