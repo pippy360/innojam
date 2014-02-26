@@ -6,6 +6,7 @@
 	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
 	<script src="main.js"></script>
+	<meta name="viewport" content="width=device-width, user-scalable=no">
 	<style>
 		/*bad css hack to make the Error output look better*/
 		.input-error{
@@ -22,7 +23,7 @@
 </head>
 <body>
 <div data-role="page" data-theme="b" id="main" >
-	<header data-role="header" data-theme="b">
+	<header data-role="header" data-position="fixed" data-theme="b">
 		<h1>When to?!</h1>
 	</header>
 	<div data-role="content">
@@ -47,7 +48,7 @@
 		</form-->
 		<a href="#bus-list" data-role="button">Submit</a>
 	</div>
-	<footer data-role="footer" style="text-align:center;" data-theme="b">
+	<footer data-role="footer" data-position="fixed" style="text-align:center;" data-theme="b">
 		<em>Developed by TCD.</em>
 	</footer>
 </div>
@@ -78,9 +79,9 @@
 		<a href="#main" data-icon="arrow-l">Back</a>
 	</header>
 	<div data-role="content">
-	
+	<p></p>
 	</div>
-	<footer data-role="footer" style="text-align:center;" data-theme="b">
+	<footer data-role="footer" style="text-align:center;" data-theme="b" data-position="fixed">
 		<em>Developed by TCD.</em>
 	</footer>
 </div>
