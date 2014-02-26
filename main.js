@@ -8,7 +8,6 @@ var fakeData = {
 //global state
 var state = {
 	routeId : null, //valid, confirmed by the server
-	routes : [], //list of routes as returned by the server
 
 	stopId : null, //valid, confirmed by the server
 	stops : [], //list of stops as returned by the server
