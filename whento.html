@@ -7,7 +7,17 @@
 	<script src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
 	<!--script src="main.js"></script-->
 	<style>
-		li{text-align:center;}
+		/*bad css hack to make the Error output look better*/
+		.input-error{
+			color: red;
+			width: 100px;
+			text-align: center;
+			float: right;
+			margin: 0;
+			margin-right: 50%;
+			margin-left: 50%;
+			padding-top: 10px;
+		}
 	</style>
 </head>
 <body>
@@ -48,12 +58,12 @@
 	</header>
 	<div data-role="content">
 		<ul data-role="listview">
-			<li><a href="#count-down">8:14 - 46a</a></li>
-			<li><a href="#count-down">8:18 - 46a</a></li>
-			<li><a href="#count-down">8:14 - 46a</a></li>
-			<li><a href="#count-down">8:18 - 46a</a></li>
-			<li><a href="#count-down">8:14 - 46a</a></li>
-			<li><a href="#count-down">8:18 - 46a</a></li>
+			<li><a href="#count-down" style="text-align:center;">8:14 - 46a</a></li>
+			<li><a href="#count-down" style="text-align:center;">8:18 - 46a</a></li>
+			<li><a href="#count-down" style="text-align:center;">8:14 - 46a</a></li>
+			<li><a href="#count-down" style="text-align:center;">8:18 - 46a</a></li>
+			<li><a href="#count-down" style="text-align:center;">8:14 - 46a</a></li>
+			<li><a href="#count-down" style="text-align:center;">8:18 - 46a</a></li>
 		</ul>
 	</div>
 	<footer data-role="footer" style="text-align:center;" data-theme="b">
