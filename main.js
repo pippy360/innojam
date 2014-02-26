@@ -1,40 +1,60 @@
+'use strict';
+
 var fakeData = {
 	routes : ['11','12','22','32','42'],
 	buses : []
 };
 
+//global state
 var state = {
-	routeId : null,
-	stopId : null,
+	routeId : null, //valid, confirmed by the server
+	routes : [], //list of routes as returned by the server
+
+	stopId : null, //valid, confirmed by the server
+	stops : [], //list of stops as returned by the server
+
 	timeDelay : null
 };
 
-function validateNumber(text){
-	//something
-	{
-		return parsedNumberer;
-	}
-	else return null; //if invalid
+var hanaServer = "http://services.odata.org/V3/OData/OData.svc";
+
+function makeGetUrl( resource, things ){
+	var v = { '$format' : 'json' };
+	for (fi in things) v[fi] = things[fi];
+	var str = '/' + encodeURI(resource) + '?' + $.param(v);
+	return str;
 }
 
-function makeGetUrl(resource, things){
-	return '/' + JSON.stringify(resource) + '?' + JSON.stringify(things);
-}
+//entry point
+$(document).ready(function(){
+	//cache the list of bus routes
+	$.ajax({
+		url : hanaServer + makeGetUrl('Products', {}), //makeGetUrl('routeNumbers', {filter : text}),
+		dataType : "json",
+		success : function( data, textStatus, jqXHR){
+			var values = data.value;
+			for (var vi in values){
+				var name = values[vi].Name;
+				$("#route-input-list").append('<option value="' + name + '">');
+			}
+		}
+	});
+});
 
 function onRouteEntryChanged(){
 	var text = $("#routeId").value();
-	if (text.match(/'^\.d+\w?$'/)){ //number and maybe a lett
-		$.ajax({
-			url : hanaServer + makeGetUrl('routeNumbers', {filter : text}),
-			
-			
-		});
+	if (text === '' || text.match(/'^\.d+\w?$'/)){ //number and maybe a lett
+		//get route data
+		
 	}
 }
-
+/*
 //gets route data from server
-function getRouteData(){
-	return queryHanaServer( {table:'drop', get:'route'} );
+function getRouteData( callback ){
+	$.ajax({
+		url : hanaServer + makeGetUrl('routeNumbers', {filter : text}),
+
+	});
 }
 
 //gets stop data from server
@@ -75,3 +95,4 @@ function printError( target, outputStr ){
 
 	$( target ).html( outputStr );
 }
+*/
