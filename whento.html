@@ -2,15 +2,23 @@
 <head>
 	<title>When to?!</title>
 
+	<link rel="stylesheet" href="themes/whento.min.css" />
+	<link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+	
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.css" />
 	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
 	<script src="main.js"></script>
 	<meta name="viewport" content="width=device-width, user-scalable=no">
 	<style>
+	.ui.page{padding:50px;}
 		.ui-content{
-			max-width:800px;
-			margin: 0px auto;
+			max-width:600px;
+			margin: 20px auto;
+			border: 1px solid #6d6d6d;
+			border-radius: .6em;
+			background: #808080;
+			color:#f0f0f0;
 		}
 		/*bad css hack to make the Error output look better*/
 		.input-error{
@@ -26,8 +34,8 @@
 	</style>
 </head>
 <body>
-<div data-role="page" data-theme="b" id="main" >
-	<header data-role="header" data-position="fixed" data-theme="b">
+<div data-role="page" data-theme="c" id="main" >
+	<header data-role="header" data-position="fixed" data-theme="c">
 		<h1>Whento?!</h1>
 	</header>
 	<div data-role="content">
@@ -53,13 +61,13 @@
 		</form-->
 		<a href="#bus-list" data-role="button">Submit</a>
 	</div>
-	<footer data-role="footer" data-position="fixed" style="text-align:center;" data-theme="b">
+	<footer data-role="footer" data-position="fixed" style="text-align:center;" data-theme="c">
 		<em>Developed by TCD.</em>
 	</footer>
 </div>
 
-<div data-role="page" data-theme="b" id="bus-list">
-	<header data-role="header" data-theme="b">
+<div data-role="page" data-theme="c" id="bus-list">
+	<header data-role="header" data-theme="c">
 		<h1>Whento?!</h1>
 		<a href="#main" data-icon="arrow-l">Back</a>
 	</header>
@@ -73,25 +81,25 @@
 			<li><a href="#count-down" style="text-align:center;">8:18 - 46a</a></li>
 		</ul>
 	</div>
-	<footer data-role="footer" style="text-align:center;" data-position="fixed" data-theme="b">
+	<footer data-role="footer" style="text-align:center;" data-position="fixed" data-theme="c">
 		<em>Developed by TCD.</em>
 	</footer>
 </div>
 
-<div data-role="page" data-theme="b" id="count-down">
-	<header data-role="header" data-theme="b">
+<div data-role="page" data-theme="c" id="count-down">
+	<header data-role="header" data-theme="c">
 		<h1>Whento?!</h1>
 		<a href="#main" data-icon="delete">Cancel</a>
 	</header>
 	<div data-role="content">
-		<p style="text-align:center;">
+		<p style="text-align:center;font-size:150%;">
 			<span id="route-number">46a</span><br/>
 			Bus stop: <span id="bus-stop-number">1714</span><br/>
 			<span id="countdown-arival">32:02</span> min. till bus arrives.<br/>
 			<span id="countdown-to-leave">27:02</span> min. to leave home.<br/>
 		</p>
 	</div>
-	<footer data-role="footer" style="text-align:center;" data-theme="b" data-position="fixed">
+	<footer data-role="footer" style="text-align:center;" data-theme="c" data-position="fixed">
 		<em>Developed by TCD.</em>
 	</footer>
 </div>
