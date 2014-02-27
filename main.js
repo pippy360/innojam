@@ -36,7 +36,8 @@ function queryHanaServer( resource, args, onSuccess, onFail ){
 	$.ajax({
 		url : str,
 		dataType : "json",
-		success : onSuccess
+		success : onSuccess,
+		error : onFail
 	});
 }
 
@@ -59,6 +60,8 @@ $(document).ready(function(){
 			$("#route-input-list").append('<option value="' + terminals + ' | ' + number + '">');
 			$("#route-input-list").append('<option value="' + reverseTerminals + ' | ' + number + '">');
 		}
+	}, function(thing){
+		alert('fail');
 	});
 });
 
