@@ -48,7 +48,7 @@ function distance(lat1, lon1, lat2, lon2){
 
 function queryHanaServer( resource, args, onSuccess, onFail ){
 	var full = { 'resource' : resource, '$format' : 'json' };
-	for (fi in args) full[fi] = args[fi];
+	for (var fi in args) full[fi] = args[fi];
 
 	var str = "http://10.182.93.212/query.php"; //'http://54.84.210.109:8000/sap/dev1/dev1.xsodata/' + encodeURI(resource);
 	if (full !== {}) str += '?' + $.param(full);
@@ -105,8 +105,8 @@ $(document).ready(function(){
 	  ' STOPLONGITUADE lt ' + (state.geo[1] + 0.1) + ' and STOPLONGITUADE gt ' + (state.geo[1] - 0.1), '$top' : 30}, 
 	  function(data){
 		var stops = data.d.results;
-		for (si in stops){
-			var v = { id : v[STOPID], lat : v[STOPLATITUDE], lon : v[STOPLONGITUADE], dist : 0, name : v[STOPNAME] };
+		for (var si in stops){
+			var v = { id : stops[si]['STOPID'], lat : stops[si]['STOPLATITUDE'], lon : stops[si]['STOPLONGITUADE'], name : stops[si]['STOPNAME'] };
 			v.dist = distance(state.geo[0], state.geo[1], v.lat, v.lon);
 			closestStops.push(v);
 		}
