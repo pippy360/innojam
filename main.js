@@ -23,7 +23,9 @@ var state = {
 	stopId : null, //valid, confirmed by the server
 	stops : [], //list of stops as returned by the server
 
-	timeDelay : null
+	timeDelay : null,
+
+	geo : [53.360387,-6.273408] //fake
 };
 
 function queryHanaServer( resource, args, onSuccess, onFail ){
@@ -43,6 +45,9 @@ function queryHanaServer( resource, args, onSuccess, onFail ){
 
 //entry point
 $(document).ready(function(){
+	//timer
+	CreateTimer("countdown-arrival", "countdown-to-leave", "alarm","turn-off", 10, 9);
+
 	//cache the list of bus routes
 	queryHanaServer( 'routes', {}, function(data, a, b){
 		var values = data.d.results;
@@ -62,6 +67,25 @@ $(document).ready(function(){
 		}
 	}, function(thing, b, c){
 		alert('fail');
+	});
+
+	//get the geolocation
+	if ("geolocation" in navigator) {
+		navigator.geolocation.getCurrentPosition(function(position) {
+			state.geo = [position.coords.latitude, position.coords.longitude];
+		});
+	} 
+
+	else {
+  		//fake it
+  		state.geo = [53.360387,-6.273408];
+	}
+
+	//get the stops around the user
+	queryHanaServer( 'stops', {'filter' : 'STOPLATITUDE lt ' + (state.geo[0] + 0.1) + ' and STOPLATITUDE gt ' + (state.geo[0] - 0.1), '$top' : 20}, function(data){
+		var values = data.d.results;
+	}, function(a, b, c){
+		alert(b);
 	});
 });
 

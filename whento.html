@@ -8,10 +8,9 @@
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.css" />
 	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
+	<script type="text/javascript" src="countdown.js"> </script>
 	<script src="main.js"></script>
 	<meta name="viewport" content="width=device-width, user-scalable=no">
-	<script type="text/javascript" src="countdown.js"> </script>
-		
 	<style>
 	.ui.page{padding:50px;}
 		.ui-content{
@@ -99,13 +98,6 @@
 	<div data-role="content">
 		<p style="text-align:center;font-size:150%;">
 			<audio src="audio/beep.wav" loop="true" id="alarm"></audio>
-			
-			<script type="text/javascript">
-			window.onload = function(){
-					CreateTimer("countdown-arrival", "countdown-to-leave", "alarm","turn-off",10,9);
-				};
-			</script>
-			
 			<span id="route-number">46a</span><br/>
 			Bus stop: <span id="bus-stop-number">1714</span><br/>
 			<span id="countdown-arrival"></span> min. till bus arrives.<br/>
