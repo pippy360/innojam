@@ -98,11 +98,11 @@
 	</header>
 	<div data-role="content">
 		<p style="text-align:center;font-size:150%;">
-			
+			<audio src="audio/beep.wav" loop="true" id="alarm"></audio>
 			
 			<script type="text/javascript">
 			window.onload = function(){
-					CreateTimer("countdown-arrival", "countdown-to-leave",10,5);
+					CreateTimer("countdown-arrival", "countdown-to-leave", "alarm","turn-off",10,9);
 				};
 			</script>
 			
@@ -111,6 +111,7 @@
 			<span id="countdown-arrival"></span> min. till bus arrives.<br/>
 			<span id="countdown-to-leave"></span> min. to leave home.<br/>
 		</p>
+		<div id="turn-off"></div>
 	</div>
 	<footer data-role="footer" style="text-align:center;" data-theme="c" data-position="fixed">
 		<em>Developed by TCD.</em>

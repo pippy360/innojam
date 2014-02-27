@@ -2,10 +2,15 @@ var counterToArrive;
 var counterToLeave;
 var totalSecondsToLeave;
 var totalSecondsToArrive;
+var alarm;
+var turnOff;
 
-function CreateTimer(counterToArriveID, counterToLeaveID, minutesToBus, minutesToWalk){
+function CreateTimer(counterToArriveID, counterToLeaveID, alarmID, turnOffID, minutesToBus, minutesToWalk){
 	counterToArrive = document.getElementById(counterToArriveID);
 	counterToLeave = document.getElementById(counterToLeaveID);
+	
+	alarm = document.getElementById(alarmID);
+	turnOff = document.getElementById(turnOffID);
 	
 	totalSecondsToArrive = minutesToBus*60;
 	totalSecondsToLeave = totalSecondsToArrive - minutesToWalk*60;
@@ -15,7 +20,11 @@ function CreateTimer(counterToArriveID, counterToLeaveID, minutesToBus, minutesT
 }
 
 function tick(){
-	if(totalSecondsToLeave<=0){return;}
+	if(totalSecondsToLeave<=0){
+		alarm.play();
+		turnOff.innerHTML = "<a href=\"#\" data-role=\"button\" onclick=\"turnOffAlarm()\">Got it!</a>";
+		return;
+	}
 	
 	totalSecondsToArrive -= 1;
 	totalSecondsToLeave -= 1;
@@ -35,4 +44,8 @@ function updateCounter(){
 	minutes = Math.floor(totalSecondsToLeave/60);
 	seconds = totalSecondsToLeave%60;
 	counterToLeave.innerHTML = ((minutes<10)? "0"+minutes: minutes) + ":" + ((seconds<10)? "0"+seconds : seconds);
+}
+
+function turnOffAlarm(){
+	alarm.pause();
 }
