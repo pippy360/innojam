@@ -10,7 +10,7 @@
 	<style>
 		.ui-content{
 			max-width:800px;
-			margin:0px auto;
+			margin: 0px auto;
 		}
 		/*bad css hack to make the Error output look better*/
 		.input-error{
@@ -28,7 +28,7 @@
 <body>
 <div data-role="page" data-theme="b" id="main" >
 	<header data-role="header" data-position="fixed" data-theme="b">
-		<h1>When to?!</h1>
+		<h1>Whento?!</h1>
 	</header>
 	<div data-role="content">
 		<div class="ui-field-contain">
@@ -60,7 +60,7 @@
 
 <div data-role="page" data-theme="b" id="bus-list">
 	<header data-role="header" data-theme="b">
-		<h1>When to?!</h1>
+		<h1>Whento?!</h1>
 		<a href="#main" data-icon="arrow-l">Back</a>
 	</header>
 	<div data-role="content" class="content">
@@ -80,11 +80,16 @@
 
 <div data-role="page" data-theme="b" id="count-down">
 	<header data-role="header" data-theme="b">
-		<h1>When to?!</h1>
-		<a href="#main" data-icon="arrow-l">Back</a>
+		<h1>Whento?!</h1>
+		<a href="#main" data-icon="delete">Cancel</a>
 	</header>
 	<div data-role="content">
-		<p style="text-align:center;"></p>
+		<p style="text-align:center;">
+			<span id="route-number">46a</span><br/>
+			Bus stop: <span id="bus-stop-number">1714</span><br/>
+			<span id="countdown-arival">32:02</span> min. till bus arrives.<br/>
+			<span id="countdown-to-leave">27:02</span> min. to leave home.<br/>
+		</p>
 	</div>
 	<footer data-role="footer" style="text-align:center;" data-theme="b" data-position="fixed">
 		<em>Developed by TCD.</em>
