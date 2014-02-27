@@ -4,8 +4,11 @@ var totalSecondsToLeave;
 var totalSecondsToArrive;
 var alarm;
 var turnOff;
+var bAlarmOn;
 
 function CreateTimer(counterToArriveID, counterToLeaveID, alarmID, turnOffID, minutesToBus, minutesToWalk){
+	bAlarmOn = true;
+
 	counterToArrive = document.getElementById(counterToArriveID);
 	counterToLeave = document.getElementById(counterToLeaveID);
 	
@@ -22,9 +25,8 @@ function CreateTimer(counterToArriveID, counterToLeaveID, alarmID, turnOffID, mi
 function tick(){
 	if(totalSecondsToLeave<=0){
 		alarm.play();
-		turnOff.innerHTML = "<a href=\"#\" data-role=\"button\" onclick=\"turnOffAlarm()\">Got it!</a>";
 		return;
-	}
+	}else if(!bAlarmOn){return;}
 	
 	totalSecondsToArrive -= 1;
 	totalSecondsToLeave -= 1;
