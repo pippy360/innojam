@@ -3,11 +3,6 @@
 //odata query keywords
 //http://msdn.microsoft.com/en-us/library/windowsazure/gg312156.aspx#SupportedODataFunctionality
 
-var fakeData = {
-	routes : ['11','12','22','32','42'],
-	buses : []
-};
-
 //cache of all the routes
 var routeNumberToTerminals = {};
 var routeTerminalsToNumber = {};
@@ -27,7 +22,9 @@ var hanaServer = "http://10.182.93.212/"; //http://services.odata.org/V3/OData/O
 function makeGetUrl( resource, things ){
 	var v = {};// '$format' : 'json' };
 	for (fi in things) v[fi] = things[fi];
-	var str = hanaServer + '/' + encodeURI(resource) + '?' + $.param(v);
+
+	var str = hanaServer + '/' + encodeURI(resource);
+	if (v !== {}) str += '?' + $.param(v);
 	return str;
 }
 
@@ -35,7 +32,7 @@ function makeGetUrl( resource, things ){
 $(document).ready(function(){
 	//cache the list of bus routes
 	$.ajax({
-		url : makeGetUrl('routeNumbers', {}),
+		url : makeGetUrl('routes', {}),
 		dataType : "json",
 		success : function( data, textStatus, jqXHR){
 			var values = data;//.value;
@@ -55,8 +52,6 @@ $(document).ready(function(){
 			}
 		}
 	});
-
-
 });
 
 function stopsAutocomplete(text, callback){
