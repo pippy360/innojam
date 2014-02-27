@@ -3,6 +3,15 @@
 //odata query keywords
 //http://msdn.microsoft.com/en-us/library/windowsazure/gg312156.aspx#SupportedODataFunctionality
 
+
+//http://stackoverflow.com/questions/18082/validate-numbers-in-javascript-isnumeric
+function isNumber(n) {
+	return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+//SELECT * FROM "SAP_DCODE"."sap.DCODE.data::DCODE.M_DUBLINBUSSTOPS" WHERE STOPID LIKE '6001';
+
+
 //cache of all the routes
 var routeNumberToTerminals = {};
 var routeTerminalsToNumber = {};
@@ -17,54 +26,69 @@ var state = {
 	timeDelay : null
 };
 
-var hanaServer = "http://10.182.93.212/"; //http://services.odata.org/V3/OData/OData.svc";
+function queryHanaServer( resource, args, onSuccess, onFail ){
+	var full = { 'resource' : resource, '$format' : 'json' };
+	for (fi in args) full[fi] = args[fi];
 
-function makeGetUrl( resource, things ){
-	var v = {};// '$format' : 'json' };
-	for (fi in things) v[fi] = things[fi];
+	var str = "http://10.182.93.212/query.php"; //'http://54.84.210.109:8000/sap/dev1/dev1.xsodata/' + encodeURI(resource);
+	if (full !== {}) str += '?' + $.param(full);
 
-	var str = hanaServer + '/' + encodeURI(resource);
-	if (v !== {}) str += '?' + $.param(v);
-	return str;
+	$.ajax({
+		url : str,
+		dataType : "json",
+		success : onSuccess
+	});
 }
 
 //entry point
 $(document).ready(function(){
 	//cache the list of bus routes
-	$.ajax({
-		url : makeGetUrl('routes', {}),
-		dataType : "json",
-		success : function( data, textStatus, jqXHR){
-			var values = data;//.value;
-			for (var vi in values){
-				var number = values[vi]["route_short_name"];
-				var terminals = values[vi]["router_long_name"];
-				var terms = terminals.split(' - ');
-				var reverseTerminals = terms[1] + ' - ' + terms[0];
+	queryHanaServer( 'routes', {}, function(data, a, b){
+		var values = data;//.value;
+		for (var vi in values){
+			var number = values[vi]["route_short_name"];
+			var terminals = values[vi]["router_long_name"];
+			var terms = terminals.split(' - ');
+			var reverseTerminals = terms[1] + ' - ' + terms[0];
 
-				routeNumberToTerminals[number] = terminals;
-				routeNumberToTerminals[terminals] = number;
-				routeNumberToTerminals[reverseTerminals] = number;
+			routeNumberToTerminals[number] = terminals;
+			routeNumberToTerminals[terminals] = number;
+			routeNumberToTerminals[reverseTerminals] = number;
 
-				$("#route-input-list").append('<option value="' + number + '">');
-				$("#route-input-list").append('<option value="' + terminals + '">');
-				$("#route-input-list").append('<option value="' + reverseTerminals + '">');
-			}
+			$("#route-input-list").append('<option value="' + number + ' | ' + terminals + '">');
+			$("#route-input-list").append('<option value="' + terminals + ' | ' + number + '">');
+			$("#route-input-list").append('<option value="' + reverseTerminals + ' | ' + number + '">');
 		}
 	});
 });
 
-function stopsAutocomplete(text, callback){
-	//ajax stuff when hana works
-
-}
-
 function onRouteEntryChanged(){
 	var text = $("#routeId").val();
-	if (text === '' || text.match(/'^\.d+\w?$'/)){ //number and maybe a lett
-		//get route data
-		
+	var match;
+	var good = false;;
+
+	//user entered the number
+	if ((match = text.match(/^\.d+\w?/)) != null){ //number and maybe a lett
+		var number = match[0];
+		//make sure the number is there
+		var terms;
+		if ((terms = routeNumberToTerminals[number]) != null){
+			//route is valid
+			good = true;
+			status.routeId = number;
+		}
 	}
+
+	else if ((match = text.match(/^(\w+.*) |/))){
+		var number;
+		if ((number = routeTerminalsToNumber[match[1]])){
+			//valid once more
+			good = true;
+			status.routeId = number;
+		}
+	}
+
+	$('#stop-input-error').text(error ? 'error' : 'good');
 }
 
 function onStopEntryChanged(){
@@ -72,7 +96,10 @@ function onStopEntryChanged(){
 
 	if (text !== ''){
 		//get all the stops that match this name
+		queryHanaServer( 'stop_search', { 'partial' : text }, function(data){
+			data = data.d.results;
 
+		});
 	}
 }
 /*
@@ -94,13 +121,7 @@ function getBusesData( route, stop, time ){
 	return queryHanaServer( "table:drop;get:time+route+stop" );
 }
 
-function queryHanaServer( query ){
-	var urlQuery = makeQuery( query );
-	$.ajax("something.com/query");
-	ajax.onComplete( function (){ 
-		
-	});
-}
+
 
 function upload(){
 
