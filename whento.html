@@ -8,6 +8,10 @@
 	<script src="main.js"></script>
 	<meta name="viewport" content="width=device-width, user-scalable=no">
 	<style>
+		.content{
+			max-width:800px;
+			margin:0px auto;
+		}
 		/*bad css hack to make the Error output look better*/
 		.input-error{
 			color: red;
@@ -26,7 +30,7 @@
 	<header data-role="header" data-position="fixed" data-theme="b">
 		<h1>When to?!</h1>
 	</header>
-	<div data-role="content">
+	<div data-role="content" class="content">
 		<div class="ui-field-contain">
 			<label for="stop-input">Bus stop:</label>
 			<input type="search" name="clear" id="stop-input" list="stop-input-list"/>
@@ -59,7 +63,7 @@
 		<h1>When to?!</h1>
 		<a href="#main" data-icon="arrow-l">Back</a>
 	</header>
-	<div data-role="content">
+	<div data-role="content" class="content">
 		<ul data-role="listview">
 			<li><a href="#count-down" style="text-align:center;">8:14 - 46a</a></li>
 			<li><a href="#count-down" style="text-align:center;">8:18 - 46a</a></li>
@@ -69,18 +73,18 @@
 			<li><a href="#count-down" style="text-align:center;">8:18 - 46a</a></li>
 		</ul>
 	</div>
-	<footer data-role="footer" style="text-align:center;" data-theme="b">
+	<footer data-role="footer" style="text-align:center;" data-position="fixed" data-theme="b">
 		<em>Developed by TCD.</em>
 	</footer>
 </div>
 
-<div data-role="page" data-theme="b" id="count-down">
+<div data-role="page" data-theme="b" id="count-down" class="content">
 	<header data-role="header" data-theme="b">
 		<h1>When to?!</h1>
 		<a href="#main" data-icon="arrow-l">Back</a>
 	</header>
-	<div data-role="content">
-	<p></p>
+	<div data-role="content" class="content">
+		<p style="text-align:center;"></p>
 	</div>
 	<footer data-role="footer" style="text-align:center;" data-theme="b" data-position="fixed">
 		<em>Developed by TCD.</em>
