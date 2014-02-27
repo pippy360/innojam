@@ -1,9 +1,11 @@
 'use strict';
 
-var fakeData = {
-	routes : ['11','12','22','32','42'],
-	buses : []
-};
+//odata query keywords
+//http://msdn.microsoft.com/en-us/library/windowsazure/gg312156.aspx#SupportedODataFunctionality
+
+//cache of all the routes
+var routeNumberToTerminals = {};
+var routeTerminalsToNumber = {};
 
 //global state
 var state = {
@@ -15,12 +17,14 @@ var state = {
 	timeDelay : null
 };
 
-var hanaServer = "http://services.odata.org/V3/OData/OData.svc";
+var hanaServer = "http://10.182.93.212/"; //http://services.odata.org/V3/OData/OData.svc";
 
 function makeGetUrl( resource, things ){
-	var v = { '$format' : 'json' };
+	var v = {};// '$format' : 'json' };
 	for (fi in things) v[fi] = things[fi];
-	var str = '/' + encodeURI(resource) + '?' + $.param(v);
+
+	var str = hanaServer + '/' + encodeURI(resource);
+	if (v !== {}) str += '?' + $.param(v);
 	return str;
 }
 
@@ -28,23 +32,47 @@ function makeGetUrl( resource, things ){
 $(document).ready(function(){
 	//cache the list of bus routes
 	$.ajax({
-		url : hanaServer + makeGetUrl('Products', {}), //makeGetUrl('routeNumbers', {filter : text}),
+		url : makeGetUrl('routes', {}),
 		dataType : "json",
 		success : function( data, textStatus, jqXHR){
-			var values = data.value;
+			var values = data;//.value;
 			for (var vi in values){
-				var name = values[vi].Name;
-				$("#route-input-list").append('<option value="' + name + '">');
+				var number = values[vi]["route_short_name"];
+				var terminals = values[vi]["router_long_name"];
+				var terms = terminals.split(' - ');
+				var reverseTerminals = terms[1] + ' - ' + terms[0];
+
+				routeNumberToTerminals[number] = terminals;
+				routeNumberToTerminals[terminals] = number;
+				routeNumberToTerminals[reverseTerminals] = number;
+
+				$("#route-input-list").append('<option value="' + number + '">');
+				$("#route-input-list").append('<option value="' + terminals + '">');
+				$("#route-input-list").append('<option value="' + reverseTerminals + '">');
 			}
 		}
 	});
 });
 
+function stopsAutocomplete(text, callback){
+	//ajax stuff when hana works
+
+}
+
 function onRouteEntryChanged(){
-	var text = $("#routeId").value();
+	var text = $("#routeId").val();
 	if (text === '' || text.match(/'^\.d+\w?$'/)){ //number and maybe a lett
 		//get route data
 		
+	}
+}
+
+function onStopEntryChanged(){
+	var text = $("#stop-input").val();
+
+	if (text !== ''){
+		//get all the stops that match this name
+
 	}
 }
 /*
