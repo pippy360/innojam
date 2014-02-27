@@ -49,5 +49,6 @@ function updateCounter(){
 }
 
 function turnOffAlarm(){
+	bAlarmOn=false;
 	alarm.pause();
 }
