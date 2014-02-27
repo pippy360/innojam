@@ -16,6 +16,9 @@ function isNumber(n) {
 var routeNumberToTerminals = {};
 var routeTerminalsToNumber = {};
 
+//cache of closest stops
+var closestStops = [];
+
 //global state
 var state = {
 	routeId : null, //valid, confirmed by the server
@@ -25,8 +28,23 @@ var state = {
 
 	timeDelay : null,
 
-	geo : [53.360387,-6.273408] //fake
+	geo : [53.294522,-6.426714] //here
 };
+
+//http://www.movable-type.co.uk/scripts/latlong.html
+function distance(lat1, lon1, lat2, lon2){
+	var m = Math.PI / 180;
+	var R = 6371; // km
+	var dLat = (lat2-lat1) * m;
+	var dLon = (lon2-lon1) * m;
+	var lat1 = lat1 * m;
+	var lat2 = lat2 * m;
+
+	var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+	        Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+	return R * c;
+}
 
 function queryHanaServer( resource, args, onSuccess, onFail ){
 	var full = { 'resource' : resource, '$format' : 'json' };
@@ -82,8 +100,24 @@ $(document).ready(function(){
 	}
 
 	//get the stops around the user
-	queryHanaServer( 'stops', {'filter' : 'STOPLATITUDE lt ' + (state.geo[0] + 0.1) + ' and STOPLATITUDE gt ' + (state.geo[0] - 0.1), '$top' : 20}, function(data){
-		var values = data.d.results;
+	queryHanaServer( 'stops', 
+		{'filter' : 'STOPLATITUDE lt ' + (state.geo[0] + 0.1) + ' and STOPLATITUDE gt ' + (state.geo[0] - 0.1) + 
+	  ' STOPLONGITUADE lt ' + (state.geo[1] + 0.1) + ' and STOPLONGITUADE gt ' + (state.geo[1] - 0.1), '$top' : 30}, 
+	  function(data){
+		var stops = data.d.results;
+		for (si in stops){
+			var v = { id : v[STOPID], lat : v[STOPLATITUDE], lon : v[STOPLONGITUADE], dist : 0, name : v[STOPNAME] };
+			v.dist = distance(state.geo[0], state.geo[1], v.lat, v.lon);
+			closestStops.push(v);
+		}
+		closestStops.sort(function(a, b){
+			return a.dist - b.dist;
+		});
+
+		for (var vi in closestStops){
+			var stop = closestStops[vi];
+			$("#stop-input-list").append('<option value="' + stop.name + ', ' + stop.dist + 'm away">');
+		}
 	}, function(a, b, c){
 		alert(b);
 	});
@@ -92,7 +126,7 @@ $(document).ready(function(){
 function onRouteEntryChanged(){
 	var text = $("#routeId").val();
 	var match;
-	var good = false;;
+	var good = false;
 
 	//user entered the number
 	if ((match = text.match(/^\.d+\w?/)) != null){ //number and maybe a lett
