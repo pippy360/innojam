@@ -45,10 +45,10 @@ function queryHanaServer( resource, args, onSuccess, onFail ){
 $(document).ready(function(){
 	//cache the list of bus routes
 	queryHanaServer( 'routes', {}, function(data, a, b){
-		var values = data;//.value;
+		var values = data.d.results;
 		for (var vi in values){
-			var number = values[vi]["route_short_name"];
-			var terminals = values[vi]["router_long_name"];
+			var number = values[vi]["ROUTESHORTNAME"];
+			var terminals = values[vi]["ROUTELONGNAME"];
 			var terms = terminals.split(' - ');
 			var reverseTerminals = terms[1] + ' - ' + terms[0];
 
@@ -60,7 +60,7 @@ $(document).ready(function(){
 			$("#route-input-list").append('<option value="' + terminals + ' | ' + number + '">');
 			$("#route-input-list").append('<option value="' + reverseTerminals + ' | ' + number + '">');
 		}
-	}, function(thing){
+	}, function(thing, b, c){
 		alert('fail');
 	});
 });
